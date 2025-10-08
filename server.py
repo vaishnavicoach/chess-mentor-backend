@@ -428,6 +428,12 @@ async def health_check():
 # Include the router in the main app
 app.include_router(api_router)
 
+# ✅ Define allowed origins explicitly
+allowed_origins = os.environ.get(
+    'CORS_ORIGINS',
+    'https://hca-coachmentor.netlify.app,http://localhost:3000'
+).split(',')
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
@@ -435,6 +441,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+@app.get("/")
+async def root():
+    return {"message": "🎉 Chess Mentor Backend is Live and Connected!"}
+
 
 # Configure logging
 logging.basicConfig(
