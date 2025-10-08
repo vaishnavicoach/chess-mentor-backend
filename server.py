@@ -441,9 +441,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-@app.get("/")
-async def root():
-    return {"message": "🎉 Chess Mentor Backend is Live and Connected!"}
 
 
 # Configure logging
@@ -456,6 +453,10 @@ logger = logging.getLogger(__name__)
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+    
+@app.get("/")
+async def home():
+    return {"message": "🎉 Chess Mentor Backend is Live and Connected!"}
 
 if __name__ == "__main__":
     import uvicorn
